@@ -129,7 +129,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         now = pygame.time.get_ticks()
         if self.gun > 1 and now - self.gun_time > 5000:
-            self.gun -= 1
+            # self.gun -= 1
             self.gun_time = now
 
         if self.hidden and now - self.hide_time > 1000:
@@ -156,13 +156,24 @@ class Player(pygame.sprite.Sprite):
                 bullets.add(bullet)
                 shoot_sound.play()
             elif self.gun >=2:
-                bullet1 = Bullet(self.rect.left, self.rect.centery)
-                bullet2 = Bullet(self.rect.right, self.rect.centery)
-                all_sprites.add(bullet1)
-                all_sprites.add(bullet2)
-                bullets.add(bullet1)
-                bullets.add(bullet2)
+                for i in range(1,self.gun+1):
+                    if(i %2==0):
+                        b=Bullet(self.rect.right-i*5, self.rect.centery)
+                        all_sprites.add(b)
+                        bullets.add(b)
+                    else:
+                        b=Bullet(self.rect.left-i*5-1, self.rect.centery)
+                        all_sprites.add(b)
+                        bullets.add(b)
+                # bullet1 = Bullet(self.rect.left, self.rect.centery)
+                # bullet2 = Bullet(self.rect.right, self.rect.centery)
+                # all_sprites.add(bullet1)
+                # all_sprites.add(bullet2)
+                # bullets.add(bullet1)
+                # bullets.add(bullet2)
                 shoot_sound.play()
+            # elif self.gun >=7:
+            #     pass
 
     def hide(self):
         self.hidden = True
